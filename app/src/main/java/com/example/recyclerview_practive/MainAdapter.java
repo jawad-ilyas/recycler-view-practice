@@ -21,10 +21,16 @@ public class MainAdapter  extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
     Context context;
 
 
+    public interface onItemClicked{
+        void clickedItem(int position );
+    }
+    onItemClicked clicked;
     MainAdapter(Context context,  ArrayList<User> users)
     {
         this.context = context;
         this.users = users;
+
+        clicked = (onItemClicked) context;
     }
     @NonNull
     @Override
@@ -39,6 +45,12 @@ public class MainAdapter  extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
         holder.binding.imageView.setImageResource(users.get(position).Image);
         holder.binding.name.setText(users.get(position).name);
 
+        holder.itemView.setOnClickListener(v -> {
+            if (clicked != null) {
+                clicked.clickedItem(position);
+            }
+        });
+
     }
 
     @Override
@@ -51,6 +63,8 @@ public class MainAdapter  extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             binding  = SingleRowLayoutBinding.bind(itemView);
+
+
         }
     }
 }

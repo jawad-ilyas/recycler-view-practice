@@ -5,15 +5,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.recyclerview_practive.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainAdapter.onItemClicked {
 
 
     ActivityMainBinding binding;
+    ArrayList<User> users = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        ArrayList<User> users = new ArrayList<>();
+
 
         users.add( new User(R.drawable.baseline_person_24 , "kawad")  );
         users.add( new User(R.drawable.baseline_person_24 , "111")  );
@@ -39,5 +41,12 @@ public class MainActivity extends AppCompatActivity {
         MainAdapter adapter = new MainAdapter(this , users);
 
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void clickedItem(int position) {
+
+
+        Toast.makeText(this, users.get(position).name, Toast.LENGTH_SHORT).show();
     }
 }
